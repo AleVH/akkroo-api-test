@@ -12,12 +12,15 @@ If the docker image is required for a faster and easier testing, once the image 
 ```docker run --rm -p 8080:80 -e LOG_STDOUT=true -e LOG_STDERR=true -e LOG_LEVEL=debug -v <full path to where the api is located, the index.php file more precisely>:/var/www/html akkroo-test```
 If it is going to be tested locally without any virtual environment, the remember the root directory has to follow the same principle as the docker image (where the index.php file is located, NOT the public folder)*.
 
-## Testing the API - command line
-To use/test the api it can be done with Postman or executing the client file from the command line with:
+## Testing the API
+To use/test the api it can be done with Postman or using the test case prepared for that end.
+ 
+### Command line
+To test with the command line, go to the folder called "Test-case" and execute the client file from the command line with:
 ```php client.php```
 however, this will require to comment and uncomment some lines in that file, otherwise, you might try to get all the leads before getting the access token. The lines to uncomment are marked as "STEP 1", "STEP 2" and so on and there are instructions on each line
 
-## Testing the API - postman
+### Postman
 To use postman, the flow is the same, but i'll explain all the steps. First just like with the command line, 'seeds' needs to be planted so we have some sample data to work with. In order to do so, make a GET call to:
 ```http://127.0.0.1:8080/public/seeds```
 and hit "Send".
@@ -33,7 +36,7 @@ In the authorization tab (right below where you enter the url) select 'Basic Aut
 
 This call should return the access token that you will need in all the other calls. The token lasts for 30 minutes but that can be changed in the Token Controller.
 
-###Get Leads
+### Get Leads
 To get all the leads you just need to make a GET call to:
 ```http://127.0.0.1:8080/public/leads```
 In the authorization tab, select the type "Bearer Token" and paste the 'access_token' you received in the previous call and then just hit "Send". You should get back something like this:
