@@ -93,3 +93,7 @@ and hit "Send". You should get back and answer from the api like this:
 	"lead_id":  100
 }
 ```
+
+
+#### Notes
+(*) I was not able to change the document root in the docker container, for some reason the editor didn't let me do it, that's why the base url includes 'public'. I'll keep trying to find a way.
