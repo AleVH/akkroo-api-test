@@ -9,7 +9,7 @@ The src folder contain the rest of the API files. Right now there's only 1 entit
 
 ## Using the docker image
 If the docker image is required for a faster and easier testing, once the image has been dowloaded, run the command:
-```docker run --rm -p 8080:80 -e LOG_STDOUT=true -e LOG_STDERR=true -e LOG_LEVEL=debug -v <full path to where the api is located, the index.php file more precisely>:/var/www/html akkroo-test```
+```docker run --rm -p 8080:80 -e LOG_STDOUT=true -e LOG_STDERR=true -e LOG_LEVEL=debug -v <full path to where the api is located, the base folder NOT the public>:/var/www/html akkroo-test```
 If it is going to be tested locally without any virtual environment, the remember the root directory has to follow the same principle as the docker image (where the index.php file is located, NOT the public folder)*.
 
 ## Testing the API
