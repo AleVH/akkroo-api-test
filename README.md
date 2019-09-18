@@ -27,9 +27,10 @@ and hit "Send".
 Then the access token is needed. Make a POST call to
 ```http://127.0.0.1:8080/public/token```
 In the authorization tab (right below where you enter the url) select 'Basic Auth' and complete the username and password with one of the following:
+
 |user|password|
 |--|--|
-|AleVH | SuperSecret!
+|AleVH|SuperSecret!
 |Akkroo|giveMeTheJob!
 |Random1|123#
 |Random2|anotherPw

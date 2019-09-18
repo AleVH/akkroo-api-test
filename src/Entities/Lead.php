@@ -1,10 +1,9 @@
 <?php
-
+/**
+ * This class defines the structure of the Lead object. If there is any change in the data about a lead, should start here.
+ */
 
 namespace Src\Entities;
-
-
-use PHPUnit\Framework\MockObject\Stub\Exception;
 
 class Lead {
 
@@ -12,7 +11,7 @@ class Lead {
     private $first_name;// (mandatory)
     private $last_name;//(mandatory)
     private $email;// (mandatory)
-    private $accept_terms;// (mandatory) this one is not necessary since without accepting the terms, shouldn't be able to get stored...
+    private $accept_terms;// (mandatory)
     private $company;// (optional)
     private $post_code;// (optional)
     private $date_created;
