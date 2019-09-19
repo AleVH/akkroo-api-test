@@ -12,7 +12,11 @@ If the docker image is required for a faster and easier testing, once the image 
 ```docker run --rm -p 8080:80 -e LOG_STDOUT=true -e LOG_STDERR=true -e LOG_LEVEL=debug -v <full path to where the api is located, the base folder NOT the public>:/var/www/html akkroo-test```
 If it is going to be tested locally without any virtual environment, the remember the root directory has to follow the same principle as the docker image (where the index.php file is located, NOT the public folder)*.
 
-## Testing the API
+## Dependencies
+To get all the necessary dependencies, go to the location of the 'composer.json' file with the command line and run the command:
+```composer install```
+
+## Testing the API with practical cases
 To use/test the api it can be done with Postman or using the test case prepared for that end.
  
 ### Command line
@@ -98,6 +102,12 @@ and hit "Send". You should get back and answer from the api like this:
 }
 ```
 
+### Testing the API with PHPUnit
+To run the tests from PHPUnit, simply run the command:
+
+```
+composer test
+```
 
 #### Notes
-(*) I was not able to change the document root in the docker container, for some reason the editor didn't let me do it, that's why the base url includes 'public'. I'll keep trying to find a way.
+(*) I was not able to change the document root in the docker container, for some reason the editor didn't let me do it and I didn't want to spend time trying to fix that, that's why the base url includes 'public'. I'll keep trying to find a way.

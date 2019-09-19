@@ -10,8 +10,11 @@ use Src\Entities\Lead;
 class DataSeedController {
 
     public static function clearAllCache(){
+        // the path is relative to the index.php file, not this class
+        if(file_exists('../Test-case/client_token.txt')){
+            unlink('../Test-case/client_token.txt');
+        }
         apcu_clear_cache();
-        unlink('client_token.txt');
     }
 
     /**

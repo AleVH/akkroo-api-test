@@ -1,13 +1,13 @@
 <?php
-
+/**
+ * This controller is in charge of everything related to the Lead entity
+ */
 
 namespace Src\Controller;
 
 use Src\Entities\Lead;
 use Src\GatewayFactory\GatewayFactory;
 use Src\Traits\Responses;
-use Src\TableGateways\LeadCacheGateway;
-use Src\TableGateways\LeadDBGateway;
 
 class LeadController {
 
@@ -27,15 +27,17 @@ class LeadController {
 
     public function processRequest(){
         switch ($this->request_method){
-            case 'GET': // only to get data
+            case 'GET':
                 return $this->getLead();
                 break;
             case 'POST':
                 return $this->saveLead();
                 break;
             case 'UPDATE':
+                // TO-DO
                 break;
             case 'DELETE':
+                // TO-DO
                 break;
         }
     }
@@ -44,8 +46,8 @@ class LeadController {
      * This method is to get all leads or a specific one. in this particular case, if there is some problem with the lead id, it's going to return all leads by default
      */
     private function getLead(){
-        if(isset($this->uri[3]) && is_numeric($this->uri[3])){
-            $lead_data = $this->storage_pref->find($this->uri[3]);
+        if(isset($this->uri[1]) && is_numeric($this->uri[1])){
+            $lead_data = $this->storage_pref->find($this->uri[1]);
         }else{
             $lead_data = $this->storage_pref->findAll();
         }

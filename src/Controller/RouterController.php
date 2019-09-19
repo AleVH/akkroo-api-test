@@ -27,13 +27,13 @@ class RouterController {
      */
     public function validate_uri_segments(){
 
-        if($this->uri[2] === 'token'){
+        if($this->uri[0] === 'token'){
             $pre_response = new TokenController($this->request_method, $this->authorization['username'], $this->authorization['password']);
             $response = $pre_response->processRequest();
         }else{
             //t his if is to validate the access token
             if($this->validateAccessToken($this->authorization)){
-                switch ($this->uri[2]){
+                switch ($this->uri[0]){
                     case 'leads':
                         $pre_response = new LeadController($this->request_method, $this->post_data, $this->uri);
                         $response = $pre_response->processRequest();

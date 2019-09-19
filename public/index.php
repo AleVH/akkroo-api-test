@@ -11,12 +11,18 @@ header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+// this bit is to clean the url and get endpoint and parameters when they are passed in the url
+$base_url = getenv('AKKROO_BASE_URL');
+$base_url = parse_url($base_url, PHP_URL_PATH);//echo 'base url: '.$base_url."\n";
+$base_url = explode('/', $base_url);
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);//echo 'uri: '.$uri."\n";
 $uri = explode('/', $uri);
 
+$uri = array_values(array_diff($uri, $base_url));//echo 'diff: '.var_dump($test)."\n";
+
 $valid_endpoints = array('token', 'leads', 'seeds');
-if(!in_array($uri[2], $valid_endpoints)){
+if(!in_array($uri[0], $valid_endpoints)){
     header("HTTP/1.1 404 Not Found");
     exit("Akkroo - not a valid endpoint");
 }
@@ -26,12 +32,12 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 $data = '';
 
 // this bit is just to have some example data in the api to test
-if($uri[2] == 'seeds'){
+if($uri[0] == 'seeds'){
     DataSeedController::clearAllCache();
     DataSeedController::plantDataSeeds();
 }
 
-if($uri[2] === 'token'){
+if($uri[0] === 'token'){
     $authorization = array(
         'username' => $_SERVER['PHP_AUTH_USER'],
         'password' => $_SERVER['PHP_AUTH_PW']

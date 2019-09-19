@@ -4,25 +4,27 @@ require "../bootstrap.php";
 
 $clientId     = getenv('AKKROO_CLIENTID');
 $clientSecret = getenv('AKKROO_SECRET');
+$scope        = getenv('AKKROO_SCOPE');
 $base_url     = getenv('AKKROO_BASE_URL');
+$port         = getenv('AKKROO_PORT');
 
 // STEP 1 - Execute the client file ("php client.php") only with the next line uncommented and all other steps commented
-//plantSeeds($base_url);
+//plantSeeds($base_url, $port);
 
 // STEP 2 - Once the 'seeds' had been planted, uncomment the next line together with any of the other steps. Keep in mind that the step 4 will not work until you execute the step 3.2 first
-//$token = checkToken($base_url, $clientId, $clientSecret, $scope);
+$token = checkToken($base_url, $clientId, $clientSecret, $port, $scope);
 
 // STEP 3.1 - This and the next 2 steps are examples of things that can be done with the api, fetch all data, specific data and save data
-//getAllLeads($base_url, $token);
+//getAllLeads($base_url, $port, $token);
 
 // STEP 3.2
-//saveLead($base_url, $token);
+//saveLead($base_url, $port, $token);
 
 // STEP 4
-//getLead($base_url, $token, 100);
+//getLead($base_url, $port, $token, 100);
 
 
-function plantSeeds($base_url){
+function plantSeeds($base_url, $port){
     echo "planting data seeds...";
 
     $url = $base_url.'/seeds';
@@ -36,7 +38,7 @@ function plantSeeds($base_url){
 
     curl_setopt ($ch, CURLOPT_URL, $url);
     curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt ($ch, CURLOPT_PORT , 8080);
+    curl_setopt ($ch, CURLOPT_PORT , $port);
 
     $output = curl_exec($ch);
 //    $output = json_decode($output, true);
@@ -45,7 +47,7 @@ function plantSeeds($base_url){
     var_dump($output);
 }
 
-function getToken($base_url, $clientId, $clientSecret, $scope){
+function getToken($base_url, $clientId, $clientSecret, $port, $scope){
     echo "get token\n";
 
     // prepare the request
@@ -77,7 +79,7 @@ function getToken($base_url, $clientId, $clientSecret, $scope){
     // The submitted form data, encoded as query-string-style name-value pairs
     curl_setopt ($ch, CURLOPT_POSTFIELDS, $payload);
     curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt ($ch, CURLOPT_PORT , 8080);
+    curl_setopt ($ch, CURLOPT_PORT , $port);
 
     $output = curl_exec($ch);
 
@@ -99,15 +101,15 @@ function getToken($base_url, $clientId, $clientSecret, $scope){
 
 }
 
-function checkToken($base_url, $clientId, $clientSecret, $scope){
+function checkToken($base_url, $clientId, $clientSecret, $port, $scope){
     if(file_exists('client_token.txt')){echo "getting token from file\n";
         return file_get_contents('client_token.txt');
     }else{echo "getting token from api\n";
-        return getToken($base_url, $clientId, $clientSecret, $scope);
+        return getToken($base_url, $clientId, $clientSecret, $port, $scope);
     }
 }
 
-function saveLead($base_url, $token){
+function saveLead($base_url, $port, $token){
     echo "saving Lead...";
 
 //    echo 'token: '.$token."\n";
@@ -136,7 +138,7 @@ function saveLead($base_url, $token){
 //    curl_setopt ($ch, CURLOPT_CUSTOMREQUEST, "GET");
     curl_setopt ($ch, CURLOPT_POSTFIELDS, $post_data);
     curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt ($ch, CURLOPT_PORT , 8080);
+    curl_setopt ($ch, CURLOPT_PORT , $port);
     curl_setopt ($ch, CURLOPT_POST, 1);
     curl_setopt( $ch, CURLOPT_HTTPHEADER, array(
         'Content-Type: application/json',
@@ -152,7 +154,7 @@ function saveLead($base_url, $token){
 
 }
 
-function getAllLeads($base_url, $token){
+function getAllLeads($base_url, $port, $token){
     echo "getting Leads...";
 
     $url = $base_url.'/leads';
@@ -167,7 +169,7 @@ function getAllLeads($base_url, $token){
     curl_setopt ($ch, CURLOPT_URL, $url);
     curl_setopt ($ch, CURLOPT_CUSTOMREQUEST, "GET");
     curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt ($ch, CURLOPT_PORT , 8080);
+    curl_setopt ($ch, CURLOPT_PORT , $port);
     curl_setopt( $ch, CURLOPT_HTTPHEADER, array(
         'Content-Type: application/json',
         "Authorization: $token"
@@ -182,7 +184,7 @@ function getAllLeads($base_url, $token){
 
 }
 
-function getLead($base_url, $token, $id){
+function getLead($base_url, $port, $token, $id){
     echo "getting a Lead...";
 
     $url = $base_url.'/leads/'.$id;
@@ -197,7 +199,7 @@ function getLead($base_url, $token, $id){
     curl_setopt ($ch, CURLOPT_URL, $url);
     curl_setopt ($ch, CURLOPT_CUSTOMREQUEST, "GET");
     curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt ($ch, CURLOPT_PORT , 8080);
+    curl_setopt ($ch, CURLOPT_PORT , $port);
     curl_setopt( $ch, CURLOPT_HTTPHEADER, array(
         'Content-Type: application/json',
         "Authorization: $token"
