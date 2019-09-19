@@ -22,7 +22,7 @@ class LeadController {
         $this->request_data = $new_request_data;
         $this->request_method = $new_request_method;
         $this->uri = $uri;
-        $this->storage_pref = GatewayFactory::createGateway('Lead');
+        $this->storage_pref = GatewayFactory::createGateway('Lead');print_r($new_request_data);
     }
 
     public function processRequest(){
@@ -56,7 +56,7 @@ class LeadController {
         return $response;
     }
 
-    private function saveLead(){
+    private function saveLead(){var_dump($this->request_data);
         if($this->request_data['accept_terms']){
             $new_lead = new Lead($this->request_data['first_name'], $this->request_data['last_name'], $this->request_data['email'], $this->request_data['accept_terms'], $this->request_data['company'], $this->request_data['post_code']);
             $this->storage_pref->save($new_lead);
