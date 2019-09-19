@@ -44,8 +44,8 @@ final class AkkrooApiTest extends TestCase
         $this->assertRegExp('/access_token/', $response->getBody());
         $json_string_start = strpos($response->getBody(), "{");
         $json_string_end = strpos($response->getBody(), "}");
-        $json_tring = substr($response->getBody(), $json_string_start, $json_string_end);
-        $json_decoded = json_decode($json_tring, true);
+        $json_string = substr($response->getBody(), $json_string_start, ($json_string_end+1));
+        $json_decoded = json_decode($json_string, true);
         return $json_decoded['access_token'];
     }
 
@@ -53,7 +53,18 @@ final class AkkrooApiTest extends TestCase
      * @depends testTokenRequest
      */
     public function testGetAll($token){
-//        $response = $this->http->request('GET', 'public/leads', ['auth', ['Bearer '.$token]]);
+        $response = $this->http->request('GET', 'public/leads', ['headers' => ['Authorization' => 'Bearer '.$token, 'Accept' => 'application/json']]);
+//        $response = $this->http->get('public/leads', ['headers' => ['Authorization' => 'Bearer '.$token, 'Accept' => 'application/json']]);
+        $this->assertEquals(200, $response->getStatusCode());
+        $rx = json_decode($response->getBody(), true);
+        var_dump($rx);
+    }
+
+    /**
+     * @depends testTokenRequest
+     */
+    public function testPostLead($token){
 
     }
+
 }

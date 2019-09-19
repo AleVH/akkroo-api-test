@@ -20,7 +20,7 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);//echo 'uri: '.$uri."\n"
 $uri = explode('/', $uri);
 
 $uri = array_values(array_diff($uri, $base_url));//echo 'diff: '.var_dump($test)."\n";
-var_dump($_SERVER['HTTP_AUTHORIZATION']);
+
 $valid_endpoints = array('token', 'leads', 'seeds');
 if(!in_array($uri[0], $valid_endpoints)){
     header("HTTP/1.1 404 Not Found");
