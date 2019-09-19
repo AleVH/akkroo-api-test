@@ -20,7 +20,7 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);//echo 'uri: '.$uri."\n"
 $uri = explode('/', $uri);
 
 $uri = array_values(array_diff($uri, $base_url));//echo 'diff: '.var_dump($test)."\n";
-
+var_dump($_SERVER['HTTP_AUTHORIZATION']);
 $valid_endpoints = array('token', 'leads', 'seeds');
 if(!in_array($uri[0], $valid_endpoints)){
     header("HTTP/1.1 404 Not Found");
@@ -35,6 +35,9 @@ $data = '';
 if($uri[0] == 'seeds'){
     DataSeedController::clearAllCache();
     DataSeedController::plantDataSeeds();
+    header('HTTP/1.1 200 OK');
+    echo 'Seeds Planted';
+    exit();
 }
 
 if($uri[0] === 'token'){
@@ -42,7 +45,7 @@ if($uri[0] === 'token'){
         'username' => $_SERVER['PHP_AUTH_USER'],
         'password' => $_SERVER['PHP_AUTH_PW']
     );
-}else {
+}else{
     // this bit is to get the access token from the request
     switch (true) {
         case array_key_exists('HTTP_AUTHORIZATION', $_SERVER) :

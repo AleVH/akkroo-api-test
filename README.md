@@ -9,7 +9,7 @@ The src folder contain the rest of the API files. Right now there's only 1 entit
 
 ## Using the docker image
 If the docker image is required for a faster and easier testing, once the image has been dowloaded, run the command:
-```docker run --rm -p 8080:80 -e LOG_STDOUT=true -e LOG_STDERR=true -e LOG_LEVEL=debug -v <full path to where the api is located, the base folder NOT the public>:/var/www/html akkroo-test```
+```docker run --rm -p 80:80 -e LOG_STDOUT=true -e LOG_STDERR=true -e LOG_LEVEL=debug -v <full path to where the api is located, the base folder NOT the public>:/var/www/html akkroo-test```
 If it is going to be tested locally without any virtual environment, the remember the root directory has to follow the same principle as the docker image (where the index.php file is located, NOT the public folder)*.
 
 ## Dependencies
@@ -26,10 +26,10 @@ however, this will require to comment and uncomment some lines in that file, oth
 
 ### Postman
 To use postman, the flow is the same, but i'll explain all the steps. First just like with the command line, 'seeds' needs to be planted so we have some sample data to work with. In order to do so, make a GET call to:
-```http://127.0.0.1:8080/public/seeds```
+```http://127.0.0.1/public/seeds```
 and hit "Send".
 Then the access token is needed. Make a POST call to
-```http://127.0.0.1:8080/public/token```
+```http://127.0.0.1/public/token```
 In the authorization tab (right below where you enter the url) select 'Basic Auth' and complete the username and password with one of the following:
 
 |user|password|
@@ -43,7 +43,7 @@ This call should return the access token that you will need in all the other cal
 
 ### Get Leads
 To get all the leads you just need to make a GET call to:
-```http://127.0.0.1:8080/public/leads```
+```http://127.0.0.1/public/leads```
 In the authorization tab, select the type "Bearer Token" and paste the 'access_token' you received in the previous call and then just hit "Send". You should get back something like this:
 ```
 [
@@ -79,11 +79,11 @@ In the authorization tab, select the type "Bearer Token" and paste the 'access_t
 ]
 ```
 In order to get a specific lead, you need to know the 'lead_index'. This can be done by getting all of them and then looking one by one, or if it is a lead added recently, the response you will get after adding it is the lead index number.  With this number make a GET call to:
-```http://127.0.0.1:8080/public/leads/<lead_index>```
+```http://127.0.0.1/public/leads/<lead_index>```
 and you will get back that specific lead.
  ### Save a Lead
  In order to save a lead you have to make a POST call to:
- ```http://127.0.0.1:8080/public/leads```
+ ```http://127.0.0.1/public/leads```
  Again, below the url, in the authorization tab select "Bearer Token" and paste the one you got earlier (unless it has expired, in which case you will have to get a new one). Then select the Body tab, select the "raw" option and on the same line and the right end there is a dropdown that should have "Text" selected by default, change it to "JSON (application/json)". Not all the fields are compulsory (you can check this in the Lead entity class), but the ones in this example are all the ones that can be in the call, 'date_created' for example is generated on the fly by the api and so some others. So paste the information in the body of the call with this format:
  ```
 {

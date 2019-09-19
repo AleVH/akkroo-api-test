@@ -12,7 +12,7 @@ $port         = getenv('AKKROO_PORT');
 //plantSeeds($base_url, $port);
 
 // STEP 2 - Once the 'seeds' had been planted, uncomment the next line together with any of the other steps. Keep in mind that the step 4 will not work until you execute the step 3.2 first
-$token = checkToken($base_url, $clientId, $clientSecret, $port, $scope);
+//$token = checkToken($base_url, $clientId, $clientSecret, $port, $scope);
 
 // STEP 3.1 - This and the next 2 steps are examples of things that can be done with the api, fetch all data, specific data and save data
 //getAllLeads($base_url, $port, $token);

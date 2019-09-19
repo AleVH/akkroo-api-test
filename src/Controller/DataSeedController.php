@@ -733,9 +733,9 @@ class DataSeedController {
         foreach ($leads_examples as $a_lead){
             $new_lead = new Lead($a_lead['first_name'], $a_lead['last_name'], $a_lead['email'], true, $a_lead['company'], $a_lead['post_code']);
             if(apcu_store('lead_'.$new_lead->getLeadIndex(), $new_lead->toArray())){
-                echo "OK index ".$new_lead->getLeadIndex()."\n";
-            }else{
-                echo "ERROR index ".$new_lead->getLeadIndex()."\n";
+//                echo "OK index ".$new_lead->getLeadIndex()."\n";
+//            }else{
+//                echo "ERROR index ".$new_lead->getLeadIndex()."\n";
             }
         }
     }
